@@ -1,0 +1,47 @@
+/* Status Indicators */
+.status-indicator {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+.status-indicator.running {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.status-indicator.stopped {
+    background-color: #f44336;
+    color: white;
+}
+
+.status-indicator.connected {
+    border: 2px solid #4CAF50;
+}
+
+.status-indicator.disconnected {
+    border: 2px solid #f44336;
+}
+
+/* RPM Display */
+#rpmDisplay {
+    font-weight: bold;
+    color: #2196F3;
+    min-width: 60px;
+    display: inline-block;
+    text-align: right;
+    font-size: 1.2em;
+}
+
+/* Auto Run Status */
+.auto-run-enabled {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.auto-run-disabled {
+    background-color: #f44336;
+    color: white;
+}

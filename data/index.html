@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reefer Diagnostic Bench</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Reefer Diagnostic Bench</h1>
+
+      <div class="status-row">
+        <div>
+          <span class="status-label">System Status:</span>
+          <span id="systemStatus" class="status-indicator stopped"
+            >Stopped</span
+          >
+        </div>
+        <div>
+          <span class="status-label">RPM:</span>
+          <span id="rpmDisplay">0</span>
+        </div>
+        <div>
+          <button id="runBtn" class="run-btn" data-command="run">Run</button>
+          <button id="stopBtn" class="stop-btn" data-command="stop">
+            Stop
+          </button>
+        </div>
+      </div>
+
+      <!-- System Type Selection -->
+      <div class="system-settings">
+        <div class="settings-section">
+          <div class="settings-title">System Configuration</div>
+          <div class="settings-row">
+            <div class="form-group">
+              <label for="systemType">System Type:</label>
+              <select
+                id="systemType"
+                name="systemType"
+                data-setting="systemType"
+              >
+                <option value="carrier">Carrier</option>
+                <option value="thermoking">Thermo King</option>
+                <option value="apu">APU</option>
+                <option value="container">Container</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="tempUnit">Temperature Unit:</label>
+              <select id="tempUnit" name="tempUnit" data-setting="tempUnit">
+                <option value="F">Fahrenheit (°F)</option>
+                <option value="C">Celsius (°C)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="pressureUnit">Pressure Unit:</label>
+              <select
+                id="pressureUnit"
+                name="pressureUnit"
+                data-setting="pressureUnit"
+              >
+                <option value="PSI">PSI</option>
+                <option value="BAR">Bar</option>
+                <option value="KPA">kPa</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Dashboard with Readings and Thresholds -->
+      <div class="dashboard-grid">
+        <!-- Temperature sensors with settings -->
+        <div class="dashboard-panel" data-sensor-type="temperature">
+          <div class="dashboard-title">Return Air Temperature</div>
+          <div class="sensor-value" id="returnAirTemp" data-unit="F">--</div>
+          <div class="sensor-unit">°F</div>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <input
+                id="returnAirTempInput"
+                type="number"
+                class="resistance-input"
+                placeholder="Resistance (Ω)"
+                min="0"
+                max="100000"
+                step="100"
+                data-sensor="returnAirTemp"
+              />
+              <div class="input-controls">
+                <button
+                  class="arrow-btn arrow-up"
+                  data-sensor="returnAirTemp"
+                  data-adjustment="1"
+                ></button>
+                <button
+                  class="arrow-btn arrow-down"
+                  data-sensor="returnAirTemp"
+                  data-adjustment="-1"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-panel" data-sensor-type="temperature">
+          <div class="dashboard-title">Redundant Return Air Temperature</div>
+          <div class="sensor-value" id="redundantReturnAirTemp" data-unit="F">
+            --
+          </div>
+          <div class="sensor-unit">°F</div>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <input
+                id="redundantReturnAirTempInput"
+                type="number"
+                class="resistance-input"
+                placeholder="Resistance (Ω)"
+                min="0"
+                max="100000"
+                step="100"
+                data-sensor="redundantReturnAirTemp"
+              />
+              <div class="input-controls">
+                <button
+                  class="arrow-btn arrow-up"
+                  data-sensor="redundantReturnAirTemp"
+                  data-adjustment="1"
+                ></button>
+                <button
+                  class="arrow-btn arrow-down"
+                  data-sensor="redundantReturnAirTemp"
+                  data-adjustment="-1"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-panel" data-sensor-type="temperature">
+          <div class="dashboard-title">Discharge Air Temperature</div>
+          <div class="sensor-value" id="dischargeAirTemp" data-unit="F">--</div>
+          <div class="sensor-unit">°F</div>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <input
+                id="dischargeAirTempInput"
+                type="number"
+                class="resistance-input"
+                placeholder="Resistance (Ω)"
+                min="0"
+                max="100000"
+                step="100"
+                data-sensor="dischargeAirTemp"
+              />
+              <div class="input-controls">
+                <button
+                  class="arrow-btn arrow-up"
+                  data-sensor="dischargeAirTemp"
+                  data-adjustment="1"
+                ></button>
+                <button
+                  class="arrow-btn arrow-down"
+                  data-sensor="dischargeAirTemp"
+                  data-adjustment="-1"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-panel" data-sensor-type="temperature">
+          <div class="dashboard-title">Ambient Temperature</div>
+          <div class="sensor-value" id="ambientTemp" data-unit="F">--</div>
+          <div class="sensor-unit">°F</div>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <input
+                id="ambientTempInput"
+                type="number"
+                class="resistance-input"
+                placeholder="Resistance (Ω)"
+                min="0"
+                max="100000"
+                step="100"
+                data-sensor="ambientTemp"
+              />
+              <div class="input-controls">
+                <button
+                  class="arrow-btn arrow-up"
+                  data-sensor="ambientTemp"
+                  data-adjustment="1"
+                ></button>
+                <button
+                  class="arrow-btn arrow-down"
+                  data-sensor="ambientTemp"
+                  data-adjustment="-1"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-panel" data-sensor-type="temperature">
+          <div class="dashboard-title">Engine Coolant Temperature</div>
+          <div class="sensor-value" id="coolantTemp" data-unit="F">--</div>
+          <div class="sensor-unit">°F</div>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <input
+                id="coolantTempInput"
+                type="number"
+                class="resistance-input"
+                placeholder="Resistance (Ω)"
+                min="0"
+                max="100000"
+                step="100"
+                data-sensor="coolantTemp"
+              />
+              <div class="input-controls">
+                <button
+                  class="arrow-btn arrow-up"
+                  data-sensor="coolantTemp"
+                  data-adjustment="1"
+                ></button>
+                <button
+                  class="arrow-btn arrow-down"
+                  data-sensor="coolantTemp"
+                  data-adjustment="-1"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-panel" data-sensor-type="temperature">
+          <div class="dashboard-title">Coil Temperature</div>
+          <div class="sensor-value" id="coilTemp" data-unit="F">--</div>
+          <div class="sensor-unit">°F</div>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <input
+                id="coilTempInput"
+                type="number"
+                class="resistance-input"
+                placeholder="Resistance (Ω)"
+                min="0"
+                max="100000"
+                step="100"
+                data-sensor="coilTemp"
+              />
+              <div class="input-controls">
+                <button
+                  class="arrow-btn arrow-up"
+                  data-sensor="coilTemp"
+                  data-adjustment="1"
+                ></button>
+                <button
+                  class="arrow-btn arrow-down"
+                  data-sensor="coilTemp"
+                  data-adjustment="-1"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pressure sensors with settings -->
+        <div class="dashboard-panel" data-sensor-type="pressure">
+          <div class="dashboard-title">Suction Pressure</div>
+          <div class="sensor-value" id="suctionPressure" data-unit="PSI">
+            --
+          </div>
+          <div class="sensor-unit">PSI</div>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <input
+                id="suctionPressureInput"
+                type="number"
+                class="resistance-input"
+                placeholder="Resistance (Ω)"
+                min="0"
+                max="100000"
+                step="100"
+                data-sensor="suctionPressure"
+              />
+              <div class="input-controls">
+                <button
+                  class="arrow-btn arrow-up"
+                  data-sensor="suctionPressure"
+                  data-adjustment="1"
+                ></button>
+                <button
+                  class="arrow-btn arrow-down"
+                  data-sensor="suctionPressure"
+                  data-adjustment="-1"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-panel" data-sensor-type="pressure">
+          <div class="dashboard-title">Discharge Pressure</div>
+          <div class="sensor-value" id="dischargePressure" data-unit="PSI">
+            --
+          </div>
+          <div class="sensor-unit">PSI</div>
+          <div class="form-group">
+            <div class="input-wrapper">
+              <input
+                id="dischargePressureInput"
+                type="number"
+                class="resistance-input"
+                placeholder="Resistance (Ω)"
+                min="0"
+                max="100000"
+                step="100"
+                data-sensor="dischargePressure"
+              />
+              <div class="input-controls">
+                <button
+                  class="arrow-btn arrow-up"
+                  data-sensor="dischargePressure"
+                  data-adjustment="1"
+                ></button>
+                <button
+                  class="arrow-btn arrow-down"
+                  data-sensor="dischargePressure"
+                  data-adjustment="-1"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notification Panel -->
+      <div id="notification" class="notification-panel"></div>
+    </div>
+    <script src="/js/script.js"></script>
+  </body>
+</html>

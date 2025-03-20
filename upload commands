@@ -1,0 +1,5 @@
+After making these changes:
+
+    Save the file to your data/index.html
+    pio run --target uploadfs        -> upload the file to SPIFFS
+    pio run --target upload          -> upload your code (if needed)
